@@ -6,8 +6,8 @@
     android:name="com.jrdbnntt.cop4656.homework3.UrlListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.jrdbnntt.cop4656.homework3.UrlListFragment"
-    tools:listitem="@layout/fragment_urllist" />
+    tools:listitem="@layout/fragment_urllist"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin" />

@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">Homework3</string>
+    <string name="app_name">Homework 3</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="default_urls">
+        <item>https://hackfsu.com/register</item>
+        <item>http://google.com</item>
+        <item>www.jrdbnntt.com/me</item>
+    </string-array>
+
 </resources>

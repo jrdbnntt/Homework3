@@ -6,22 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jrdbnntt.cop4656.homework3.ItemFragment.OnListFragmentInteractionListener;
-import com.jrdbnntt.cop4656.homework3.dummy.DummyContent.DummyItem;
+import com.jrdbnntt.cop4656.homework3.UrlListFragment.OnListFragmentInteractionListener;
+import com.jrdbnntt.cop4656.homework3.UrlListContent.UrlListItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link UrlListItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyUrlListRecyclerViewAdapter extends RecyclerView.Adapter<MyUrlListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private static final int MAX_LIST_ITEMS = 4;
+
+    private final List<UrlListItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyUrlListRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyUrlListRecyclerViewAdapter(List<UrlListItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -29,15 +31,14 @@ public class MyUrlListRecyclerViewAdapter extends RecyclerView.Adapter<MyUrlList
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_urllist, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).getUrlWithoutProtocol());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +52,18 @@ public class MyUrlListRecyclerViewAdapter extends RecyclerView.Adapter<MyUrlList
         });
     }
 
+
+    public void addItem(UrlListItem newItem) {
+
+        if (mValues.size() == MAX_LIST_ITEMS) {
+            // Replace the last one instead of adding a new one
+            mValues.remove(MAX_LIST_ITEMS - 1);
+        }
+
+        mValues.add(newItem);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mValues.size();
@@ -58,20 +71,14 @@ public class MyUrlListRecyclerViewAdapter extends RecyclerView.Adapter<MyUrlList
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public UrlListItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 }

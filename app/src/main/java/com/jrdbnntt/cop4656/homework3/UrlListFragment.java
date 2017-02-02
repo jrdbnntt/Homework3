@@ -3,16 +3,16 @@ package com.jrdbnntt.cop4656.homework3;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jrdbnntt.cop4656.homework3.dummy.DummyContent;
-import com.jrdbnntt.cop4656.homework3.dummy.DummyContent.DummyItem;
+import com.jrdbnntt.cop4656.homework3.UrlListContent.UrlListItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,10 +23,6 @@ import java.util.List;
  */
 public class UrlListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -36,24 +32,6 @@ public class UrlListFragment extends Fragment {
     public UrlListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static UrlListFragment newInstance(int columnCount) {
-        UrlListFragment fragment = new UrlListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,16 +42,25 @@ public class UrlListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyUrlListRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(new MyUrlListRecyclerViewAdapter(getInitialItems(), mListener));
+            recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+                    layoutManager.getOrientation()));
         }
         return view;
     }
 
+    private List<UrlListItem> getInitialItems() {
+        ArrayList<UrlListItem> items = new ArrayList<>();
+        String[] defaultUrls = getContext().getResources().getStringArray(R.array.default_urls);
+
+        for (String url : defaultUrls) {
+            items.add(new UrlListItem(url));
+        }
+
+        return items;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -103,7 +90,6 @@ public class UrlListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(UrlListItem item);
     }
 }
