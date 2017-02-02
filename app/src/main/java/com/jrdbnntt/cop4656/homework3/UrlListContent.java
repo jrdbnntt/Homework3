@@ -1,7 +1,6 @@
 package com.jrdbnntt.cop4656.homework3;
 
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * Manages content of UrlList
@@ -16,7 +15,6 @@ public class UrlListContent {
 
         public UrlListItem(String url) {
             uri = getNormalizedUri(Uri.parse(url));
-            Log.d("TEST", "" + uri.getScheme());
         }
 
         /**

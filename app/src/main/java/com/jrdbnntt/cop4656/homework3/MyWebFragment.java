@@ -2,7 +2,6 @@ package com.jrdbnntt.cop4656.homework3;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,10 @@ public class MyWebFragment extends Fragment {
 
     public MyWebFragment() {
         // Required empty public constructor
+    }
+
+    public static MyWebFragment newInstance() {
+        return new MyWebFragment();
     }
 
     @Override
@@ -40,7 +43,6 @@ public class MyWebFragment extends Fragment {
 
     public void loadUrl(String url) {
         webView.loadUrl(url);
-        Log.d("TEST", "Loading url " + url);
     }
 
 }

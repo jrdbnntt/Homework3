@@ -18,8 +18,6 @@ import java.util.List;
  */
 public class MyUrlListRecyclerViewAdapter extends RecyclerView.Adapter<MyUrlListRecyclerViewAdapter.ViewHolder> {
 
-    private static final int MAX_LIST_ITEMS = 4;
-
     private final List<UrlListItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
@@ -50,18 +48,6 @@ public class MyUrlListRecyclerViewAdapter extends RecyclerView.Adapter<MyUrlList
                 }
             }
         });
-    }
-
-
-    public void addItem(UrlListItem newItem) {
-
-        if (mValues.size() == MAX_LIST_ITEMS) {
-            // Replace the last one instead of adding a new one
-            mValues.remove(MAX_LIST_ITEMS - 1);
-        }
-
-        mValues.add(newItem);
-        notifyDataSetChanged();
     }
 
     @Override
